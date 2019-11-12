@@ -9,6 +9,13 @@ public class Student {
 
     protected ArrayList<Courses> mCourses;
 
+    public Student(String mFirstName, String mLastname, int mCWID){
+        this.mFirstName = mFirstName;
+        this.mLastName = mLastname;
+        this.mCWID = mCWID;
+    }
+
+
     public String getFirstName (){return mFirstName;}
     public void setFirstName(String fName) {mFirstName = fName;}
 
@@ -21,5 +28,7 @@ public class Student {
 
     public int getCWID () {return mCWID;}
     public void setCWID( int cid) {mCWID = cid;}
+
+    public void setCourses(ArrayList<Courses> courses){mCourses = courses;}
 
 }
