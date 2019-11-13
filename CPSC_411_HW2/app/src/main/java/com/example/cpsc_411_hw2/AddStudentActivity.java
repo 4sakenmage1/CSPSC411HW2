@@ -51,7 +51,7 @@ public class AddStudentActivity extends AppCompatActivity {
             EditText CWIDView = (EditText) findViewById(R.id.cwid_val_id);
 
             Student studentObj = new Student(fNameView.getText().toString(),lNameView.getText().toString(),
-                    Integer.parseInt(CWIDView.getText().toString()));
+                   CWIDView.getText().toString());
 
             StudentDB.getInstance().getStudentList().add(studentObj);
 

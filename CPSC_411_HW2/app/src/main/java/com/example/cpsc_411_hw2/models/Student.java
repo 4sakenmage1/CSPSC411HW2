@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Student {
     protected String mFirstName;
     protected String mLastName;
-    protected int mCWID;
+    protected String mCWID;
 
     protected ArrayList<Courses> mCourses;
 
-    public Student(String mFirstName, String mLastname, int mCWID){
+    public Student(String mFirstName, String mLastname, String mCWID){
         this.mFirstName = mFirstName;
         this.mLastName = mLastname;
         this.mCWID = mCWID;
@@ -26,8 +26,8 @@ public class Student {
         mLastName = lName;
     }
 
-    public int getCWID () {return mCWID;}
-    public void setCWID( int cid) {mCWID = cid;}
+    public String getCWID () {return mCWID;}
+    public void setCWID( String cid) {mCWID = cid;}
 
     public void setCourses(ArrayList<Courses> courses){mCourses = courses;}
 

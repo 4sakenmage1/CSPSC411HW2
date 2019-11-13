@@ -13,6 +13,8 @@ import com.example.cpsc_411_hw2.StudentDetailActivity;
 import com.example.cpsc_411_hw2.models.Student;
 import com.example.cpsc_411_hw2.models.StudentDB;
 
+import org.w3c.dom.Text;
+
 public class SummaryListAdapter extends BaseAdapter {
 
     @Override
@@ -36,12 +38,18 @@ public class SummaryListAdapter extends BaseAdapter {
 
         Student s = StudentDB.getInstance().getStudentList().get(i);
 
-        TextView firstNameView = (TextView) row_view.findViewById(R.id.first_name);
-        firstNameView.setText(s.getFirstName());
-        TextView lastNameView = (TextView) row_view.findViewById(R.id.last_name);
-        lastNameView.setText(s.getLastName());
-        TextView cwid = (TextView) row_view.findViewById(R.id.CWID);
-        cwid.setText(Integer.toString(s.getCWID()));
+//        TextView firstNameView = (TextView) row_view.findViewById(R.id.first_name);
+//        firstNameView.setText(s.getFirstName());
+//        TextView lastNameView = (TextView) row_view.findViewById(R.id.last_name);
+//        lastNameView.setText(s.getLastName());
+//        TextView cwid = (TextView) row_view.findViewById(R.id.CWID);
+//        cwid.setText(Integer.toString(s.getCWID()));
+
+        ((TextView) row_view.findViewById(R.id.first_name)).setText(s.getFirstName());
+
+        ((TextView) row_view.findViewById(R.id.last_name)).setText(s.getLastName());
+
+        ((TextView) row_view.findViewById(R.id.cwid)).setText(s.getCWID());
 
         row_view.setTag(new Integer(i));
 
