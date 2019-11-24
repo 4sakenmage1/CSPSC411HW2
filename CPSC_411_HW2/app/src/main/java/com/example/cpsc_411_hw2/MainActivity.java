@@ -18,43 +18,28 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView mSummaryView;
-    protected SummaryListAdapter Adapter;
+    LinearLayout root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //createPersonObjects();
+
         setContentView(R.layout.student_list);
 
-        mSummaryView = findViewById(R.id.summary_list);
-        Adapter = new SummaryListAdapter();
-        mSummaryView.setAdapter(Adapter);
+        root = findViewById(R.id.student_listID);
 
-
-//        ArrayList<Student> studentList = StudentDB.getInstance().getStudentList();
-
-//        for(int i = 0 ; i <studentList.size(); i++)
-//        {
-//            Student s = studentList.get(i);
-//            LayoutInflater inflater = LayoutInflater.from(this);
-//            View row_view = inflater.inflate(R.layout.student_rows, root, false);
-//
-//            TextView fNameView = (TextView) row_view.findViewById(R.id.first_name);
-//            fNameView.setText(s.getFirstName());
-//            fNameView.setPadding(10,10,10,10);
-//
-//            TextView lNameView = (TextView) row_view.findViewById(R.id.last_name);
-//            lNameView.setText(s.getLastName());
-////            lNameView.setPadding(10,10,10,10);
-//
-//            TextView CWID = (TextView) row_view.findViewById(R.id.CWID);
-//            CWID.setText(Integer.toString(s.getCWID()));
-////            CWID.setPadding(10,10,10,10);
-//
-//            root.addView(row_view);
-//
-//        }
-
-
+        ArrayList<Student> studentList = StudentDB.getInstance().getStudentList();
+        for(int i = 0; i < studentList.size(); i++)
+        {
+            Student p = studentList.get(i);
+            //
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View row_view = inflater.inflate(R.layout.student_rows, root, false);
+            //
+            ((TextView) row_view.findViewById(R.id.first_name)).setText(p.getFirstName());
+            root.addView(row_view);
+        }
     }
 }

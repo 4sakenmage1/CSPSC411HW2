@@ -11,11 +11,12 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".StudentDetailActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".SummaryLV">
+        </activity>
         <activity android:name=".AddStudentActivity"
-            android:parentActivityName=".MainActivity" />
-
-        <activity android:name=".MainActivity"
+            android:parentActivityName=".SummaryLV">
+        </activity>
+        <activity android:name=".SummaryLV"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

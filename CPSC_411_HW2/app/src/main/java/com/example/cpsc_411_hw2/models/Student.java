@@ -29,6 +29,10 @@ public class Student {
     public String getCWID () {return mCWID;}
     public void setCWID( String cid) {mCWID = cid;}
 
+    public ArrayList<Courses> getCourses() {return mCourses;}
     public void setCourses(ArrayList<Courses> courses){mCourses = courses;}
+
+    public void addCourses(Courses C) {mCourses.add(C);}
+
 
 }

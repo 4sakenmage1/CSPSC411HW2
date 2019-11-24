@@ -24,32 +24,25 @@ public class SummaryListAdapter extends BaseAdapter {
     public Object getItem(int i){return StudentDB.getInstance().getStudentList().get(i);}
 
     @Override
-    public long getItemId(int i){return i;}
+    public long getItemId(int i){return 0;}
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         View row_view;
 
         if (view == null) {
-            // cnt++;
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
             row_view = inflater.inflate(R.layout.student_rows, viewGroup, false);
         } else row_view = view;
 
         Student s = StudentDB.getInstance().getStudentList().get(i);
 
-//        TextView firstNameView = (TextView) row_view.findViewById(R.id.first_name);
-//        firstNameView.setText(s.getFirstName());
-//        TextView lastNameView = (TextView) row_view.findViewById(R.id.last_name);
-//        lastNameView.setText(s.getLastName());
-//        TextView cwid = (TextView) row_view.findViewById(R.id.CWID);
-//        cwid.setText(Integer.toString(s.getCWID()));
 
         ((TextView) row_view.findViewById(R.id.first_name)).setText(s.getFirstName());
 
         ((TextView) row_view.findViewById(R.id.last_name)).setText(s.getLastName());
 
-        ((TextView) row_view.findViewById(R.id.cwid)).setText(s.getCWID());
+        ((TextView) row_view.findViewById(R.id.student_id)).setText(s.getCWID());
 
         row_view.setTag(new Integer(i));
 
