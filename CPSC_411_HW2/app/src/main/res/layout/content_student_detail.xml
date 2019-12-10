@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior=""
     tools:context=".StudentDetailActivity"
-    tools:showIn="@layout/activity_student_details">
+    tools:showIn="@layout/student_details">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

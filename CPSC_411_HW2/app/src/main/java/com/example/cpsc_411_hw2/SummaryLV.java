@@ -7,45 +7,31 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cpsc_411_hw2.adapter.SummaryListAdapter;
+import com.example.cpsc_411_hw2.models.StudentDB;
 
 public class SummaryLV extends AppCompatActivity {
 
-    protected Menu detailMenu;
-    ListView mSummaryView;
+    protected ListView mSummaryView;
     protected SummaryListAdapter ad;
+    protected Menu summaryMenu;
+    StudentDB db;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.student_list_frame);
+        db = new StudentDB(this);
 
-        mSummaryView = findViewById(R.id.summary_list_id);
+        setContentView(R.layout.student_list_lv);
+
+        mSummaryView = findViewById(R.id.student_list_id);
         ad = new SummaryListAdapter();
         mSummaryView.setAdapter(ad);
 
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.detail_student_screen_menu, menu);
-        menu.findItem(R.id.action_add).setVisible(true);
-        menu.findItem(R.id.action_edit).setVisible(false);
-        menu.findItem(R.id.action_done).setVisible(false);
-        detailMenu = menu;
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_add:{
-                Intent i = new Intent(this, AddStudentActivity.class);
-                startActivity(i);
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -55,18 +41,33 @@ public class SummaryLV extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.summary_screen_menu, menu);
+        menu.findItem(R.id.action_add).setVisible(true);
+        menu.findItem(R.id.action_submit).setVisible(false);
+        summaryMenu = menu;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    protected void onPause(){
-        super.onPause();
-    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_add) {
+            Intent intent = new Intent(this, AddStudentActivity.class);
+            startActivity(intent);
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+            item.setVisible(false);
+        } else if (item.getItemId() == R.id.action_submit) {
 
+            Intent intent = new Intent(getBaseContext(), SummaryLV.class);
+            startActivity(intent);
+            item.setVisible(false);
+            summaryMenu.findItem(R.id.action_add).setVisible(true);
+
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

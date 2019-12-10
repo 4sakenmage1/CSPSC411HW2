@@ -1,46 +1,74 @@
 package com.example.cpsc_411_hw2.models;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.io.File;
 import java.util.ArrayList;
 
-public class StudentDB {
+public class StudentDB extends Activity {
 
-    public static final StudentDB ourInstance = new StudentDB();
-    public ArrayList<Student> mStudentList;
+    File database;
+    private static SQLiteDatabase sqlDB;
 
-    static public StudentDB getInstance() {return ourInstance;}
+    public StudentDB(Context context) {
+        database = context.getDatabasePath("student.db");
+        sqlDB = SQLiteDatabase.openOrCreateDatabase(database, null);
 
+        String sqlQ = "CREATE TABLE IF NOT EXISTS STUDENT (FirstName Text, LastName Text, CWID Text)";
+        sqlDB.execSQL(sqlQ);
 
-    public StudentDB(){
-        createStudentObject();
+        sqlQ = "CREATE TABLE IF NOT EXISTS COURSES (CWID Text, Course Text, Grade Text)";
+        sqlDB.execSQL(sqlQ);
+
     }
 
-    public ArrayList<Student> getStudentList() { return mStudentList;}
+    // Retrieves the database student list
+    public static ArrayList<Student> getStudentList() {
+        ArrayList<Student> sList = new ArrayList<>();
+        Student s;
+        ArrayList<Courses> courses = new ArrayList<>();
+        Cursor curr = sqlDB.query("STUDENT", null, null,
+                null, null, null, null);
+        if(curr.getCount() > 0) {
+            while(curr.moveToNext()) {
+                s = new Student(curr.getString(0), curr.getString(1), curr.getString(2));
 
-    public void setStudentList (ArrayList<Student> sList) {mStudentList = sList;}
+                Cursor curr2 = sqlDB.query("COURSES", null, "CWID=?",
+                        new String[]{curr.getString(2)}, null, null, null);
 
-    public void addToStudentList(Student student)
-    {
-        StudentDB.getInstance().mStudentList.add(student);
+                if(curr2.getCount() > 0) {
+                    courses = new ArrayList<>();
+                    while(curr2.moveToNext()) {
+                        courses.add(new Courses(curr2.getString(1), curr2.getString(2)));
+                    }
+                }
+                s.setCourses(courses);
+                sList.add(s);
+            }
+        }
+        return sList;
     }
 
-    private void createStudentObject(){
+    // Add full list of students to the database
+    public static void addListToDB(ArrayList<Student> studentList) {
+        for(Student student:studentList){
+            sqlDB.execSQL("INSERT INTO STUDENT VALUES (?, ?, ?)", new String[]{student.getFirstName(),
+                    student.getLastName(), student.getCWID()});
 
-        Student studentObject;
-        ArrayList<Courses> courses = new ArrayList<Courses>();
-
-        studentObject = new Student("Sami", "Halwani", "889586194");
-        courses.add(new Courses("CPSC411", "A+"));
-        courses.add(new Courses("CPSC481", "A"));
-        mStudentList = new ArrayList<Student>();
-        mStudentList.add(studentObject);
-
-        studentObject = new Student("Priscella", "Zatar", "123456789");
-        courses = new ArrayList<>();
-        courses.add(new Courses("LAW999", "A+++"));
-        courses.add(new Courses("LAW998", "A++"));
-        studentObject.setCourses(courses);
-        mStudentList.add(studentObject);
+            for(Courses course:student.getCourses()) {
+                sqlDB.execSQL("INSERT INTO COURSES VALUES (?, ?, ?)", new String[]{student.getCWID(),
+                        course.getCourseID(), course.getmGrade()});
+            }
+        }
     }
-
-
+    public static void updateDB(Student updatedStudent) {
+        ContentValues cv = new ContentValues();
+        cv.put("FirstName", updatedStudent.getFirstName());
+        cv.put("LastName", updatedStudent.getLastName());
+        sqlDB.update("STUDENT", cv, "CWID=?", new String[]{updatedStudent.getCWID()});
+    }
 }
